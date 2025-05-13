@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-import logging
+from dataclasses import dataclass
+from typing import Protocol
+from logger import logger
 
-logging.basicConfig(level=logging.INFO, format="%(message)s")
-logger = logging.getLogger(__name__)
 
 class Vehicle(ABC):
     def __init__(self, make: str, model: str, spec: str) -> None:
@@ -51,7 +51,6 @@ class EUVehicleFactory(VehicleFactory):
         return Motorcycle(make, model, "EU Spec")
 
 
-
 def get_vehicle_factory(region: str) -> VehicleFactory:
     factories = {
         "US": USVehicleFactory(),
@@ -69,7 +68,6 @@ def create_vehicle(factory: VehicleFactory, vehicle_type: str, make: str, model:
         return factory.create_motorcycle(make, model)
     else:
         raise ValueError(f"Unsupported vehicle type: {vehicle_type}")
-
 
 
 def run_vehicle_demo() -> None:

@@ -1,10 +1,6 @@
-from abc import ABC, abstractmethod
 from dataclasses import dataclass
-import logging
 from typing import Protocol
-
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
-
+from logger import logger  
 
 @dataclass
 class Book:
@@ -40,18 +36,18 @@ class LibraryManager:
     def add_book(self, title: str, author: str, year: str) -> None:
         book = Book(title, author, year)
         self.library.add_book(book)
-        logging.info("Book added successfully")
+        logger.info("Book added successfully")
 
     def remove_book(self, title: str) -> None:
         self.library.remove_book(title)
-        logging.info("Book removed successfully")
+        logger.info("Book removed successfully")
 
     def show_books(self) -> None:
         books = self.library.list_books()
         if not books:
-            logging.info("No books available")
+            logger.info("No books available")
         for book in books:
-            logging.info(f"Title: {book.title}, Author: {book.author}, Year: {book.year}")
+            logger.info(f"Title: {book.title}, Author: {book.author}, Year: {book.year}")
 
 
 def main() -> None:
@@ -74,9 +70,8 @@ def main() -> None:
             case "exit":
                 break
             case _:
-                logging.warning("Invalid command. Please try again.")
+                logger.warning("Invalid command. Please try again.")
 
 
 if __name__ == "__main__":
     main()
-
